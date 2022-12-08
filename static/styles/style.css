@@ -1,0 +1,106 @@
+
+    /* Fonts
+	font-family: 'Racing Sans One', cursive;
+	font-family: 'Sono', sans-serif;
+
+*/
+
+    body {
+      background-color: rgb(57, 57, 57);
+      /* background: rgb(2,0,36); */
+      /* background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(85,85,85,1) 50%, rgb(129, 128, 128) 100%);  */
+      /* background: rgb(252,176,69);
+	background: radial-gradient(circle, rgba(252,176,69,1) 0%, rgba(209,25,25,1) 50%, rgba(46,20,62,1) 100%);  */
+      /* background: rgb(16,7,22);
+	background: radial-gradient(circle, rgba(16,7,22,1) 50%, rgba(78,9,9,1) 90%, rgba(252,176,69,1) 100%);  */
+    }
+    .buttons {
+      
+      min-height: 30vh;
+      background-color: rgb(108, 106, 106);
+
+      width: 95%;
+    }
+    .container {
+      background-color: rgb(108, 106, 106);
+    }
+    .head-sec {
+      background-color: rgb(68, 66, 66);
+    }
+    .head {
+      font-family: "Racing Sans One", cursive;
+    }
+    .logo {
+      height: 4.5rem;
+    }
+
+    label,
+    h1,
+    h3,
+    p {
+      color: white;
+    }
+    label,
+    p,
+    h3 {
+      font-family: "Sono", sans-serif;
+      font: 300;
+      font-size: 1rem;
+    }
+    h3 {
+      font-size: 1.5rem;
+    }
+    .task-text,
+    label {
+      font-size: 0.8rem;
+    }
+    button {
+      font-family: "Sono", sans-serif;
+    }
+
+    .lef {
+      background-color: rgb(68, 66, 66);
+
+      max-width: 40vw;
+      min-width: 40vw;
+    }
+    .rig {
+      max-width: 45vw;
+      min-width: 45vw;
+    }
+    .map {
+      min-height: 30vh;
+      min-width: 43vw;
+    }
+    .camera {
+      min-height: 50vh;
+      min-width: 43vw;
+    }
+
+    #container {
+      margin: 0px auto;
+      width: 500px;
+      height: 375px;
+      border: 10px #333 solid;
+    }
+    #videoElement {
+      width: 500px;
+      height: 375px;
+      background-color: #666;
+    }
+    #table_body , #table_body_1, #table_body_2{
+      font-size: 0.8rem;
+      font-family: "Sono", sans-serif;
+    }
+    #id {
+      color: rgb(68, 66, 66);
+    }
+    #boatStatus{
+      font-size: 1.5rem;
+      font-family: "Sono", sans-serif;
+    
+    }
+
+    td{
+      font-size: .85rem;
+    }
