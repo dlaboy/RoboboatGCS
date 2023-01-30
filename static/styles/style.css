@@ -16,13 +16,24 @@
     }
     .buttons {
       
-      min-height: 30vh;
-      background-color: rgb(108, 106, 106);
+      min-height: 20vh;
+      max-width: 50vw;
+
+      /* background-color: rgb(108, 106, 106); */
+      background-color: rgb(68, 66, 66);
+
 
       width: 95%;
     }
+    .objects{
+      background-color: rgb(68, 66, 66);
+
+    }
     .container {
       background-color: rgb(108, 106, 106);
+    }
+    .containel{
+      max-height: 80vh;
     }
     .head-sec {
       background-color: rgb(68, 66, 66);
@@ -61,16 +72,17 @@
     .lef {
       background-color: rgb(68, 66, 66);
 
+      max-width: 50vw;
+      min-width: 50vw;
+      min-height: 55vh;
+    }
+    .rig {
       max-width: 40vw;
       min-width: 40vw;
     }
-    .rig {
-      max-width: 45vw;
-      min-width: 45vw;
-    }
-    .map {
-      min-height: 30vh;
-      min-width: 43vw;
+    .map , .objects{
+      min-height: 38.5vh;
+      min-width: 33.5vw;
     }
     .camera {
       min-height: 50vh;

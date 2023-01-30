@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
     <!-- Stylesheets -->
     <link
       rel="stylesheet"
@@ -17,7 +19,6 @@
       integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
       crossorigin="anonymous"
     />
-    <!-- <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" /> -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -30,339 +31,309 @@
       href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css"
       rel="stylesheet"
     />
-    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}"" />
-    <!-- <link href="/path/to/bootstrap.min.css" rel="stylesheet" /> -->
+    <link rel= "stylesheet" type= "text/css" href= "{{
+    url_for('static',filename='styles/style.css') }}"" />
     <link href="/path/to/buttons.css" rel="stylesheet" />
-    <!-- Scripts -->
 
-    <!-- <script defer src="https://pyscript.net/latest/pyscript.js"></script> -->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <title>Document</title>
   </head>
-  <body>
-    <div class="container shadow pb-3 rounded">
+  <body >
+    <div class="container shadow pb-3 rounded mt-5 pt-2">
       <div
         class="head-sec col col-12 w-100 d-flex justify-content-center text-center shadow p-3 mb-2 rounded border border-secondary"
       >
-        <img src="./includes/img/yatch.png" alt="" class="img-fluid logo" />
+        <img src="" alt="" class="img-fluid logo" />
         <h1 class="head p-2">Roboboat GCS</h1>
       </div>
-      <div class="containel d-flex flex-row">
-        <div class="lef d-flex flex-column justify-content-center mr-4 rounded">
+      <div class="containel d-flex flex-column flex-wrap">
+        <div class="lef d-flex flex-row  mr-4 rounded w-100">
           <div class="tables d-flex flex-row justify-content-center">
-            {% if task == "0" %}
-            <div class="tab w-100">{% include 'includes/data.html' %}</div>
+            {% if status == "" %}
+            <div class="tab w-50">{% include 'includes/data.html' %}</div>
             <div id="tab2" class="tab2 d-none">{% include 'includes/data1.html' %}</div>
             <div class="tab3 d-none">{% include 'includes/data2.html' %}</div>
-            {% endif %}
-            
-            
+            {% endif %} 
+            {% if task == "0" or status == "OFF"%}
+            <div class="tab w-50">{% include 'includes/data.html' %}</div>
+            <div id="tab2" class="tab2 d-none">{% include 'includes/data1.html' %}</div>
+            <div class="tab3 d-none">{% include 'includes/data2.html' %}</div>
+            {% endif %} 
             {% if(task == "1") %}
             <div class="tab">{% include 'includes/data.html' %}</div>
-            <div id="tab2" class="tab2">{% include 'includes/data1.html' %}</div>
+            <div id="tab2" class="tab2">
+              {% include 'includes/data1.html' %}
+            </div>
             <div class="tab3 d-none">{% include 'includes/data2.html' %}</div>
 
-            {% endif %}
-
-            {% if(task == "2") %}
+            {% endif %} {% if(task == "2") %}
             <div class="tab">{% include 'includes/data.html' %}</div>
-            <div id="tab2 " class="tab2 d-none">{% include 'includes/data1.html' %}</div>
+            <div id="tab2 " class="tab2 d-none">
+              {% include 'includes/data1.html' %}
+            </div>
             <div class="tab3">{% include 'includes/data2.html' %}</div>
 
             {% endif %}
           </div>
+    
 
           <!-- Buttons -->
-          <div
-            class="buttons row d-flex flex-row align-items-center justify-content-evenly rounded shadow ml-3 mt-3 "
+        </div>
+        <div
+        class="buttons row d-flex flex-row align-items-center justify-content-evenly rounded shadow ml-1 mt-3"
+        >
+     
+        <div
+          class="col col-3 d-flex justify-content-center align-items-center"
+        >
+          <button
+            type="button"
+            class="btn btn-danger  rounded-circle shadow p-4 "
+            data-toggle="modal"
+            data-target="#exampleModalCenter"
+            data-backdrop="static"
+            autocomplete="off"
           >
-         
-            <div
-              class="col col-3 m-2 d-flex justify-content-center align-items-center"
-            >
-              <button
-                type="button"
-                class="btn btn-danger  rounded-circle shadow p-4 "
-                data-toggle="modal"
-                data-target="#exampleModalCenter"
-                data-backdrop="static"
-                autocomplete="off"
-              >
-                Kill <br />
-                Switch
-              </button>
+            Kill <br />
+            Switch
+          </button>
 
-              <div
-                class="modal fade"
-                id="exampleModalCenter"
-                tabindex="-1"
-                role="dialog"
-                aria-labelledby="exampleModalCenterTitle"
-                aria-hidden="true"
-              >
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5
-                        class="modal-title d-flex justify-content-center"
-                        id="exampleModalLongTitle"
-                      >
-                        WARNING!
-                      </h5>
-                      <button
-                        type="button"
-                        class="close"
-                        data-dismiss="modal"
-                        aria-label="Close"
-                      >
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      You are about pressing Kill Switch. Are you sure?
-                    </div>
-                    <div class="modal-footer">
-                      <form action="/killSwitch" method="POST">    
-                        <input type="text" name="action"  id="action"  class="border-0" value="">
-                        <button type="submit" class="btn btn-primary" id="okay" onclick="killOk()" >Ok</button>
-                      </form>
-                      <button
-                        type="button"
-                        class="btn btn-secondary"
-                        data-dismiss="modal"
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </div>
+          <div
+            class="modal fade"
+            id="exampleModalCenter"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="exampleModalCenterTitle"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5
+                    class="modal-title d-flex justify-content-center"
+                    id="exampleModalLongTitle"
+                  >
+                    WARNING!
+                  </h5>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
                 </div>
-              </div>
-            </div>
-            <div class="col col-3 m-5 d-flex justify-content-center">
-              <a
-                href=""
-                data-toggle="modal"
-                data-target="#modal-event"
-                data-backdrop="static"
-              
-                onclick="autoModalWriter()"
-              >
-              {% if (status != "ON") and (status != "OFF") %}
-                <input
-                  id="toggle-event"
-                  
-                  type="checkbox"
-                  data-toggle="toggle"
-                  data-on="ON"
-                  data-off="OFF"
-          
-                  
-                />
-              {% endif %}  
-              {% if status == "ON" %}
-                <input
-                  id="toggle-event"
-                  checked
-                  type="checkbox"
-                  data-toggle="toggle"
-                  data-on="ON"
-                  data-off="OFF"
-          
-                  
-                />
-              {% endif %}
-              {% if status == "OFF" %}
-                <input
-                id="toggle-event"
-                
-                type="checkbox"
-                data-toggle="toggle"
-                data-on="ON"
-                data-off="OFF"
-        
-              
-                />
-              {% endif %}
-              
-              
-              {% if neither == "nadie" %}
-                <input
-                id="toggle-event"
-                
-                type="checkbox"
-                data-toggle="toggle"
-                data-on="ON"
-                data-off="OFF"
-        
-              
-                />
-              {% endif %}
-              
-              
-              
-
-              </a>
-              <!-- <div id="modal-event"></div> -->
-              <!-- Modal -->
-              <div
-                class="modal fade"
-                id="modal-event"
-                tabindex="-1"
-                role="dialog"
-                aria-labelledby="myModalLabel"
-              >
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h4 class="modal-title" id="myModalLabel">WARNING!</h4>
-                      <button
-                        type="button"
-                        class="close"
-                        data-dismiss="modal"
-                        aria-label="Close"
-                        
-                      >
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div id="autoModal" class="modal-body">
-                    
-                  </div>
-                  <div  id="taskNumber" class="taskNumber d-flex flex-row align-items-center text-dark ml-3">
-                    Select Task (Task 0 if Stand by)
-                    <select class="form-select w-25 ml-4" aria-label="Default select example">
-                      <option id="taskZero" selected>0</option>
-                      <option id="taskOne" value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="3">4</option>
-                      <option value="3">5</option>
-                      <option value="3">6</option>
-                      
-                    </select>
-                  </div>
-                  <div class="modal-footer d-flex flex-row">
-                      <form action="/autonomous_mode" method="POST">
-                        <input type="text" name="status"  id="status" class="border-0" value="" >
-                        <input type="text" name="task"  id="task" class="border-0" value="" >
-
-                        <button type="submit" class="btn btn-primary" id="okay" onclick="onclickShifter()" >Ok</button>
-                      </button>
-                      </form>
-
-                      <button
-                        type="button"
-                        class="btn btn-secondary"
-                        data-dismiss="modal"
-                        onclick="closeButton()"
-                        
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </div>
+                <div class="modal-body">
+                  You are about pressing Kill Switch. Are you sure?
+                </div>
+                <div class="modal-footer">
+                  <form action="/killSwitch" >    
+                    <input type="text" name="action"  id="action"  class="border-0" value="">
+                    <button type="submit" class="btn btn-primary" id="okay" onclick="killOk()" >Ok</button>
+                  </form>
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                  >
+                    Cancel
+                  </button>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="rig">
-          <div class="row row-cols-1">
-            <div class="col col-8 bg-primary map rounded-top">
-              Live Satelite Map
-            </div>
-            <div class="col col-8 bg-warning camera rounded-bottom">
-              Live Camera
+        <div class="col col-3 m-5 d-flex justify-content-center">
+          <a
+            href=""
+            data-toggle="modal"
+            data-target="#modal-event"
+            data-backdrop="static"
+          
+            onclick="autoModalWriter()"
+          >
+          {% if (status != "ON") and (status != "OFF") %}
+            <input
+              id="toggle-event"
+              
+              type="checkbox"
+              data-toggle="toggle"
+              data-on="ON"
+              data-off="OFF"
+      
+              
+            />
+          {% endif %}  
+          {% if status == "ON" %}
+            <input
+              id="toggle-event"
+              checked
+              type="checkbox"
+              data-toggle="toggle"
+              data-on="ON"
+              data-off="OFF"
+      
+              
+            />
+          {% endif %}
+          {% if status == "OFF" %}
+            <input
+            id="toggle-event"
+            
+            type="checkbox"
+            data-toggle="toggle"
+            data-on="ON"
+            data-off="OFF"
+    
+          
+            />
+          {% endif %}
+          
+          
+          {% if neither == "nadie" %}
+            <input
+            id="toggle-event"
+            
+            type="checkbox"
+            data-toggle="toggle"
+            data-on="ON"
+            data-off="OFF"
+    
+          
+            />
+          {% endif %}
+          
+          
+          
+
+          </a>
+          <!-- <div id="modal-event"></div> -->
+          <!-- Modal -->
+          <div
+            class="modal fade"
+            id="modal-event"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="myModalLabel"
+          >
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="myModalLabel">WARNING!</h4>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                    
+                  >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div id="autoModal" class="modal-body">
+                
+              </div>
+              <div  id="taskNumber" class="taskNumber d-flex flex-row align-items-center text-dark ml-3">
+                Select Task 
+                <select class="form-select w-25 ml-4" >
+                  <option class="d-none" id="taskZero" selected>0</option>
+                  <option id="taskOne" value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="3">4</option>
+                  <option value="3">5</option>
+                  <option value="3">6</option>
+                  
+                </select>
+              </div>
+              <div class="modal-footer d-flex flex-row">
+                  <form action="/autonomous_mode" method="POST">
+                    <input type="text" name="status"  id="status" class="border-0 d-none" value="" >
+                    <input type="text" name="task"  id="task" class="border-0 d-none" value="" >
+
+                    <button type="submit" class="btn btn-primary" id="okay" onclick="onclickShifter()" >Ok</button>
+                  </button>
+                  </form>
+
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                    onclick="closeButton()"
+                    
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
+        <div class="rig">
+          <div class="row row-cols-1">
+            <div class="col col-8 bg-primary map rounded-3">
+              Live Satelite Map
+            </div>
+            <div class="col col-8  objects rounded-3 mt-2">
+              <table class="table text-white w-100 table-borderless mr-5">
+                <thead class="text-center">
+                  <th id="boatStatus" colspan="2">Live Objects</th>
+                </thead>            
+                <tbody></tbody>
+              </table>
+            </div>
+          
+          </div>
+
+        </div>
+
+      </div>
     </div>
-    <!-- <script type=text/javascript>
-      $(function() {
-        $('a#test').on('click', function(e) {
-          e.preventDefault()
-          $.getJSON('/background_process_test',
-              function(data) {
-            //do nothing
-          });
-          return false;
-        });
-      });
-    </script> -->
+    <!-- Scripts -->
     <script>
       var button = document.getElementById("okay");
       button.innerText = "Ok";
-  
 
       function killOk() {
         var killSwitchButton = document.getElementById("action");
-        killSwitchButton.setAttribute('value','Kill Switch Pressed');
-    
+        killSwitchButton.setAttribute("value", "Kill Switch Pressed");
       }
 
       function autoModalWriter() {
         var ON = document.getElementById("status");
-        ON.setAttribute('value','')
+        ON.setAttribute("value", "");
         if (document.getElementById("toggle-event").checked === true) {
           document.getElementById("autoModal").innerHTML =
             "You are about to turn autonomous mode " +
             document.getElementById("toggle-event").getAttribute("data-off");
-          document.getElementById("taskNumber").classList.add("d-none")
+          document.getElementById("taskNumber").classList.add("d-none");
         } else if (document.getElementById("toggle-event").checked === false) {
           document.getElementById("autoModal").innerHTML =
             "You are about to turn autonomous mode " +
             document.getElementById("toggle-event").getAttribute("data-on");
-          document.getElementById("taskNumber").classList.remove("d-none")
-          
-          
+          document.getElementById("taskNumber").classList.remove("d-none");
         }
       }
 
-    
-   
-      
       function onclickShifter() {
-        
         if (document.getElementById("toggle-event").checked === true) {
           var ON = document.getElementById("status");
           var TASK = document.getElementById("task");
           // $("#toggle-event").attr("checked");
-          ON.setAttribute('value','ON');
-          TASK.setAttribute('value',$('select option:selected').val());
+          ON.setAttribute("value", "ON");
+          TASK.setAttribute("value", $("select option:selected").val());
 
-          // if(TASK.getAttribute("value") == 1){
-          //   document.getElementById("tab2").classList.remove("d-none")
-          //   var taskInitial = document.getElementById("taskZero");
-          //   var currentTask = document.getElementById("taskOne");
-
-          //   taskInitial.removeAttribute("selected");
-          //   currentTask.setAttribute("selected","");
-           
-          // }
-          // $("#modal-event").modal("hide");
-
-
-          
           $("#toggle-event").bootstrapToggle("on", true);
-          
-          
-
         } else if (document.getElementById("toggle-event").checked === false) {
           var OFF = document.getElementById("status");
           var TASK = document.getElementById("task");
 
-          OFF.setAttribute('value','OFF');
-          TASK.setAttribute('value',$('select option:selected').val());
-          
-      
+          OFF.setAttribute("value", "OFF");
+          TASK.setAttribute("value", $("select option:selected").val());
         }
-
-       
-
-
-        
       }
       function yesButton() {
         $("#modal-event").modal("hide");
@@ -405,5 +376,4 @@
     ></script>
     <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
   </body>
-  
 </html>

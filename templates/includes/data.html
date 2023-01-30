@@ -6,7 +6,7 @@
     {% for d in range(0,1) %}
     <tr>
       <!-- <th scope="row">ID:</th> -->
-      <td id="id" class="id">{{ d.id }}</td>
+      <td id="id" class="id" style="display: none">{{ d.id }}</td>
     </tr>
     <tr>
       <th scope="row">Location:</th>
@@ -56,7 +56,7 @@
     });
   }
 
-  function blinkUpdate(element, newValue, newColor = "#ff0000") {
+  function blinkUpdate(element, newValue, newColor = "#ffffff") {
     previousColor = element.style.color;
     element.innerHTML = newValue;
     element.style.color = newColor;

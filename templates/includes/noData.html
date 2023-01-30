@@ -1,0 +1,59 @@
+<table class="table text-white w-100 table-borderless mr-5">
+  <thead class="text-center">
+    <th id="boatStatus" colspan="2">Boat Status</th>
+  </thead>
+  <tbody id="table_body" class="ml-3">
+    {% for d in range(0,1) %}
+    <tr>
+      <!-- <th scope="row">ID:</th> -->
+      <td id="id" class="id">{{ d.id }}</td>
+    </tr>
+    <tr>
+      <th scope="row" class="">Location:</th>
+    </tr>
+    <tr>
+      <th scope="row">Distance:</th>
+    </tr>
+    <tr>
+      <th scope="row">Battery Status:</th>
+    </tr>
+    <tr>
+      <th scope="row">Thrusters Speed:</th>
+    </tr>
+    <tr>
+      <th scope="row">Thrusters Status:</th>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<script>
+  setInterval(function () {
+    fetch("/data_json")
+      .then((response) => response.json())
+      .then((data) => data.forEach((parameter) => updateElement(parameter)));
+  }, 1000);
+
+  function updateElement(d) {
+    Object.entries(d).forEach(([k, v]) => {
+      element = document.getElementById(k);
+      // Get previous value first
+      previousValue = element.innerHTML;
+
+      // If previous value is not equal to the new, change it!
+      if (previousValue !== v.toString()) {
+        blinkUpdate(element, v.toString());
+      }
+    });
+  }
+
+  function blinkUpdate(element, newValue, newColor = "#ffffff") {
+    previousColor = element.style.color;
+    element.innerHTML = newValue;
+    element.style.color = newColor;
+
+    // Set back to original color after timeout ms
+    setTimeout(() => {
+      element.style.color = previousColor;
+    }, 2000);
+  }
+</script>

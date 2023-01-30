@@ -3,43 +3,53 @@ import json
 from flask import render_template, jsonify, request
 
 import zmq
-import keyboard
 from time import sleep
 
-# from pub import message
-context = zmq.Context()
-socket = context.socket(zmq.PUB)
-socket.connect("tcp://127.0.0.1:8090")
+import random
 
-autoIndicator = False
+
+# to send messages to boat
+contextA = zmq.Context()
+socketA = contextA.socket(zmq.PUB)
+socketA.connect("tcp://localhost:%s" % "8090")
+
+
+
+
+
+
+
+
+
 
 def killMessage():
-    socket.send_string("Kill Switch Pressed")
+    socketA.send_string("Kill Switch Pressed")
 
 def autoON():
-    socket.send_string("Autonomous Mode ON")
+    socketA.send_string("Autonomous Mode ON")
 
 def autoOFF():
-    socket.send_string("Autonomous Mode OFF")
-
-
-
-
-
-
-
+    socketA.send_string("Autonomous Mode OFF")
 
 app = Flask(__name__)
 
-
-
 @app.route('/data_json')
 def data_json():
+    # to receive messages from boat 
+    contextB = zmq.Context()
+    socketB = contextB.socket(zmq.SUB)
+    # accept all topics (prefixed) - default is none
+    socketB.setsockopt_string(zmq.SUBSCRIBE, "")
+    socketB.connect("tcp://localhost:%s" % "8091")
+
+
+    message = socketB.recv_string()
+    
     dummy_data = [{
         "id":1,
-        "location": "41.856,23.352",
-        "distance": "125.45 m",
-        "battery_status":"90%",
+        "location": str(message),
+        "distance": "125",
+        "battery_status": "99",
         "thrusters_speed":"75% (LOW)",
         "thrusters_status":"Not Working",
 
@@ -57,42 +67,17 @@ def data_json():
         
     }
     ]
-    # dummy_data2 = [{
-    #     "task":2,
-    #     "name":"Magellan's Route/ Count the Manatees and Jellyfish",
-    #     "manatees":3,
-    #     "jellyfish":4,
-        
-    # }]
-    # dummy_data3 =[{
-    #     "task":3,
-    #     "name":"Beaching & Inspecting Turtle Nests",
-    #     "nest_of_the_day":"blue",
-    #     "eggs_in_nest":4,
-
-
-    # }]
     return jsonify(dummy_data)
 
-@app.route('/')
-def index():
-    dummy_data = data_json()
-  
-
-    return render_template('index.html',data=dummy_data.json)
 
 
-@app.route("/killSwitch", methods = ["POST", "GET"])
+@app.route("/killSwitch")
 def killSwitch():
     dummy_data = data_json()
-   
- 
-    output = request.form.to_dict()
 
-    print(output)
-    action = output["action"]
 
-    # message()
+    
+
     n = 0
 
     while True:
@@ -109,9 +94,8 @@ def killSwitch():
 
 
 
-
-    
-    return render_template('index.html', action = action, data=dummy_data.json)
+        
+    return autonomous_mode()
 
 @app.route("/autonomous_mode", methods = ["POST","GET"])
 def autonomous_mode():
@@ -119,9 +103,20 @@ def autonomous_mode():
 
 
     salida = request.form.to_dict()
+
     print(salida)
-    status = salida["status"]
-    task = salida["task"]
+
+    if(len(salida) == 0):
+        task = 0
+        print(task)
+        status = "OFF"
+        print(status)
+
+    else:
+        task = salida["task"]
+        status = salida["status"]
+
+  
 
 
     n = 0
@@ -145,7 +140,7 @@ def autonomous_mode():
         else:
             # if autonomous mode was off
             autoON()
-            socket.send_string("Task to complete: Task #"+task)
+            socketA.send_string("Task to complete: Task #"+task)
             print("message sent")
       
             sleep(2)
@@ -155,9 +150,19 @@ def autonomous_mode():
             if(n == 1):
                 break
 
-    return render_template('index.html', status = status, task = task, data=dummy_data.json)
+    return render_template('index.html', status = status, task = task, data=dummy_data.json),task
     
 
+@app.route('/')
+def index():
+    
+    dummy_data = data_json()
+
+    status=""
+    task=""
+
+  
+    return render_template('index.html', status = status, task = task, data=dummy_data.json)
         
 
 if __name__=='__main__':
