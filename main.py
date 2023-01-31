@@ -5,22 +5,10 @@ from flask import render_template, jsonify, request
 import zmq
 from time import sleep
 
-import random
-
-
 # to send messages to boat
 contextA = zmq.Context()
 socketA = contextA.socket(zmq.PUB)
 socketA.connect("tcp://localhost:%s" % "8090")
-
-
-
-
-
-
-
-
-
 
 def killMessage():
     socketA.send_string("Kill Switch Pressed")
