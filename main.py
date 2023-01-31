@@ -94,8 +94,11 @@ def killSwitch():
 
 
 
-        
-    return autonomous_mode()
+    status=""
+    task=""
+
+  
+    return render_template('index.html', status = status, task = task, data=dummy_data.json)
 
 @app.route("/autonomous_mode", methods = ["POST","GET"])
 def autonomous_mode():
